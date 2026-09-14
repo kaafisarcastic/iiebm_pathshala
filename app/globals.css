@@ -1,26 +1,72 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Design tokens lifted from iiebm.com so the landing page reads as an
+  extension of the institute's own site:
+    #003FA3  primary blue (buttons, headings, links)
+    #253A73  navy used on their placement stat cards
+    Poppins  the typeface used site-wide
+    12px     their standard card radius
+*/
+@theme {
+  --color-brand: #003fa3;
+  --color-brand-dark: #002b70;
+  --color-brand-tint: #eaf1fb;
+  --color-navy: #253a73;
+  --color-gold: #b8860f;
+  --color-gold-tint: #fdf6e3;
+  --color-ink: #101828;
+  --color-muted: #5a6472;
+  --color-line: #e5eaf2;
+  --color-canvas: #ffffff;
+  --color-canvas-alt: #f6f9fd;
+
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-brand: 12px;
+  --radius-brand-lg: 20px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  /* Offset for the sticky header when jumping to an anchor. */
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Continuous logo marquee used by the recruiter and collaboration strips. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
 }
