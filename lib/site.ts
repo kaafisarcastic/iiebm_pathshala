@@ -73,6 +73,13 @@ export const WHATSAPP_LINK = PARTNER_WHATSAPP.number
 /** How long a visitor browses before the lead modal offers itself, in ms. */
 export const LEAD_MODAL_DELAY_MS = 15_000;
 
+/**
+ * Exit intent is ignored before this. Without a floor the modal fires the
+ * first time the pointer heads for the address bar, often a second or two
+ * into the visit.
+ */
+export const LEAD_MODAL_EXIT_INTENT_MIN_MS = 10_000;
+
 export const ANCHORS = {
   form: "apply",
   placements: "placements",

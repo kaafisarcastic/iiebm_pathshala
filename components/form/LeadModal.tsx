@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LeadForm } from "@/components/form/LeadForm";
-import { INTAKE, LEAD_MODAL_DELAY_MS } from "@/lib/site";
+import {
+  INTAKE,
+  LEAD_MODAL_DELAY_MS,
+  LEAD_MODAL_EXIT_INTENT_MIN_MS,
+} from "@/lib/site";
 
 const DISMISSED_KEY = "iiebm:lead-modal-done";
 
@@ -24,8 +28,14 @@ function markHandled() {
 
 /**
  * Offers the enquiry form once per session, whichever comes first:
- *   - the visitor has been reading for 15 seconds, or
- *   - the pointer leaves towards the top of the window (exit intent).
+ *   - the visitor has been reading for LEAD_MODAL_DELAY_MS, or
+ *   - the pointer leaves towards the top of the window (exit intent), but only
+ *     after LEAD_MODAL_EXIT_INTENT_MIN_MS.
+ *
+ * The dwell floor matters: `mouseout` towards the top fires whenever someone
+ * reaches for a browser tab or the address bar, which on a fresh page load can
+ * be a second or two in. Without it the popup lands before anyone has read a
+ * word, which reads as a pop-up ad rather than an offer.
  *
  * It never interrupts someone who is already typing into a form on the page.
  */
@@ -52,7 +62,10 @@ export function LeadModal() {
       cleanup();
     };
 
+    const armedAt = Date.now() + LEAD_MODAL_EXIT_INTENT_MIN_MS;
+
     const onPointerOut = (event: MouseEvent) => {
+      if (Date.now() < armedAt) return;
       if (event.clientY <= 0 && !event.relatedTarget) reveal();
     };
 
@@ -89,7 +102,12 @@ export function LeadModal() {
         if (event.target === dialogRef.current) close();
       }}
       aria-labelledby="lead-modal-title"
-      className="w-[min(30rem,calc(100vw-2rem))] rounded-brand-lg bg-white p-0 text-ink shadow-2xl backdrop:bg-ink/60 backdrop:backdrop-blur-sm"
+      /*
+       * m-auto is load-bearing: the UA centres a modal <dialog> with
+       * `margin: auto`, and Tailwind's preflight zeroes every margin, which
+       * otherwise pins the dialog to the top-left corner.
+       */
+      className="m-auto max-h-[calc(100dvh-2rem)] w-[min(30rem,calc(100vw-2rem))] overflow-y-auto rounded-brand-lg bg-white p-0 text-ink shadow-2xl backdrop:bg-ink/60 backdrop:backdrop-blur-sm"
     >
       <div className="relative p-6 sm:p-8">
         <button
