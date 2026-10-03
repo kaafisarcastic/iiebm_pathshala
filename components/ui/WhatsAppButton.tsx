@@ -1,4 +1,10 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { PARTNER_WHATSAPP, WHATSAPP_LINK } from "@/lib/site";
+
+/** Quiet time after scrolling stops before the label invites a tap. */
+const IDLE_MS = 1_200;
 
 type WhatsAppButtonProps = {
   /**
@@ -17,24 +23,51 @@ type WhatsAppButtonProps = {
  * WhatsApp button stops reading as "WhatsApp" at a glance, which is the whole
  * point of the control.
  *
+ * The label shows while the reader is still and tucks away while they scroll,
+ * so it reads as an offer at a pause rather than a banner riding the page.
+ *
  * Renders nothing until PARTNER_WHATSAPP.number is set in lib/site.ts.
  */
 export function WhatsAppButton({
   aboveMobileBar = true,
 }: WhatsAppButtonProps = {}) {
+  // Starts collapsed so it does not fly out during the first paint; the idle
+  // timer opens it a moment after the page settles.
+  const [idle, setIdle] = useState(false);
+
+  useEffect(() => {
+    let timer = window.setTimeout(() => setIdle(true), IDLE_MS);
+
+    const onScroll = () => {
+      setIdle(false);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setIdle(true), IDLE_MS);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
   if (!WHATSAPP_LINK) return null;
 
   // The landing page's mobile bar owns the bottom of the viewport on phones.
   const bottom = aboveMobileBar ? "bottom-24 lg:bottom-5" : "bottom-5";
+  // Expanded while idle, and always on hover for pointer users.
+  const open = idle
+    ? "gap-2 pr-5 [&_.wa-label]:max-w-[14rem] [&_.wa-label]:opacity-100"
+    : "gap-0";
 
   return (
     <a
       href={WHATSAPP_LINK}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Chat with an admissions counsellor on WhatsApp at ${PARTNER_WHATSAPP.display}`}
-      title="Chat on WhatsApp"
-      className={`group fixed right-5 z-50 flex items-center gap-0 overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:gap-2 hover:pr-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] motion-reduce:transition-none ${bottom}`}
+      aria-label={`Talk to an admission counsellor on WhatsApp at ${PARTNER_WHATSAPP.display}`}
+      title="Talk to an admission counsellor"
+      className={`group fixed right-5 z-50 flex items-center overflow-hidden rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:gap-2 hover:pr-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#128C7E] motion-reduce:transition-none ${bottom} ${open}`}
     >
       <span className="flex h-14 w-14 shrink-0 items-center justify-center">
         <svg
@@ -49,15 +82,14 @@ export function WhatsAppButton({
       </span>
 
       {/*
-       * Label expands on hover for pointer users. Collapsed to zero width
-       * rather than hidden, so it animates; screen readers use the aria-label
-       * on the anchor instead, so this stays decorative.
+       * Collapsed to zero width rather than hidden, so it animates; screen
+       * readers use the aria-label on the anchor, so this stays decorative.
        */}
       <span
         aria-hidden="true"
-        className="max-w-0 whitespace-nowrap text-sm font-semibold opacity-0 transition-all duration-200 group-hover:max-w-[10rem] group-hover:opacity-100 motion-reduce:transition-none"
+        className="wa-label max-w-0 whitespace-nowrap text-sm font-semibold opacity-0 transition-all duration-300 group-hover:max-w-[14rem] group-hover:opacity-100 motion-reduce:transition-none"
       >
-        Chat with us
+        Talk to an admission counsellor
       </span>
     </a>
   );

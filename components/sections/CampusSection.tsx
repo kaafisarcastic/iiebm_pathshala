@@ -9,7 +9,7 @@ export function CampusSection() {
     <Section id={ANCHORS.campus} tone="alt">
       <SectionHeading
         eyebrow="Infrastructure"
-        title="A campus built for two years of living, not just studying"
+        title="A Campus Built For Two Years Of Living, Not Just Studying"
         description={INFRASTRUCTURE_INTRO}
       />
 
@@ -29,8 +29,8 @@ export function CampusSection() {
               />
             </div>
             <div className="p-6">
-              <h3 className="text-base font-semibold">{facility.title}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted">
+              <h3 className="type-h3">{facility.title}</h3>
+              <p className="type-body mt-1.5 text-muted">
                 {facility.description}
               </p>
             </div>
@@ -38,9 +38,9 @@ export function CampusSection() {
         ))}
       </ul>
 
-      <h3 className="mt-16 text-center text-xs font-semibold uppercase tracking-[0.18em] text-brand">
-        Academic events
-      </h3>
+      <p className="type-eyebrow mt-16 text-center text-brand">
+        Academic Events
+      </p>
       <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {campusEvents.map((event) => (
           <li

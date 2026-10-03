@@ -39,11 +39,11 @@ export function HeroSection() {
             Admissions open · Batch {INTAKE.batch}
           </p>
 
-          <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.1] sm:text-5xl lg:text-[3.35rem]">
-            The first campus in India to introduce the PGDM PLUS course
+          <h1 className="type-h1 mt-5 text-balance">
+            The First Campus In India To Introduce The PGDM PLUS Course
           </h1>
 
-          <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-white/85 sm:text-lg">
+          <p className="type-lead mt-5 max-w-xl text-pretty text-white/85">
             A two-year AICTE approved PGDM from {INSTITUTE.name}, Pune — paired
             with SAP certification through SAP University Alliances, and a
             placement cell that put this batch&apos;s highest offer at 34 LPA.
@@ -97,10 +97,10 @@ export function HeroSection() {
           id={ANCHORS.form}
           className="scroll-mt-28 rounded-brand-lg bg-white p-6 text-ink shadow-xl shadow-brand-dark/20 sm:p-7"
         >
-          <h2 className="text-xl font-semibold leading-snug">
-            Check your eligibility in one call
-          </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted">
+          <h3 className="type-h3">
+            Check Your Eligibility In One Call
+          </h3>
+          <p className="type-body mt-1.5 text-muted">
             Tell us where you are and a counsellor will call you back the same
             day.
           </p>

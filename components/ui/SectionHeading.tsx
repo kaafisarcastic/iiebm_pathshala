@@ -23,7 +23,7 @@ export function SectionHeading({
     <div className={`flex flex-col ${alignment} gap-3`}>
       {eyebrow ? (
         <span
-          className={`text-xs font-semibold uppercase tracking-[0.18em] ${
+          className={`type-eyebrow ${
             inverted ? "text-white/70" : "text-brand"
           }`}
         >
@@ -32,7 +32,7 @@ export function SectionHeading({
       ) : null}
 
       <h2
-        className={`max-w-3xl text-balance text-3xl font-semibold leading-tight sm:text-4xl ${
+        className={`type-h2 max-w-3xl text-balance ${
           inverted ? "text-white" : "text-ink"
         }`}
       >
@@ -41,7 +41,7 @@ export function SectionHeading({
 
       {description ? (
         <p
-          className={`max-w-2xl text-pretty text-base leading-relaxed ${
+          className={`type-lead max-w-2xl text-pretty ${
             inverted ? "text-white/80" : "text-muted"
           }`}
         >

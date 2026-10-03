@@ -21,11 +21,11 @@ export function FinalCtaSection() {
 
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-16 sm:px-6 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14 lg:px-8 lg:py-24">
         <div className="flex flex-col justify-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/70">
+          <p className="type-eyebrow text-white/70">
             Batch {INTAKE.batch}
           </p>
-          <h2 className="mt-3 text-balance text-3xl font-semibold leading-tight sm:text-4xl">
-            Seats at IIEBM rarely last until the deadline
+          <h2 className="type-h2 mt-3 text-balance">
+            Seats At IIEBM Rarely Last Until The Deadline
           </h2>
           <p className="mt-4 max-w-lg text-pretty leading-relaxed text-white/85">
             {INTAKE.deadlineNote} Applications opened on{" "}
@@ -51,10 +51,10 @@ export function FinalCtaSection() {
         </div>
 
         <div className="rounded-brand-lg bg-white p-6 text-ink shadow-xl shadow-brand-dark/25 sm:p-7">
-          <h3 className="text-xl font-semibold leading-snug">
-            Request your callback
+          <h3 className="type-h3">
+            Request Your Callback
           </h3>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted">
+          <p className="type-body mt-1.5 text-muted">
             Same-day callback from an admissions counsellor.
           </p>
           <div className="mt-5">

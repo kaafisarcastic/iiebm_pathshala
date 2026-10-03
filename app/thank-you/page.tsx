@@ -8,7 +8,7 @@ import { admissionSteps } from "@/data/admissions";
 import { INSTITUTE, INTAKE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Thank you — your enquiry is in",
+  title: "Thank You — Your Enquiry Is In",
   description:
     "Your admission enquiry has been received. An IIEBM admissions counsellor will call you back.",
   // A conversion page has no business in search results.
@@ -17,17 +17,17 @@ export const metadata: Metadata = {
 
 const whatHappensNext = [
   {
-    title: "A counsellor calls you",
+    title: "A Counsellor Calls You",
     detail:
       "Usually the same day, from an Indian mobile number. Keep an eye out for a call from Pune.",
   },
   {
-    title: "We check your eligibility",
+    title: "We Check Your Eligibility",
     detail:
       "Your graduation percentage and entrance score decide which specialisations are open to you.",
   },
   {
-    title: "You get the prospectus",
+    title: "You Get The Prospectus",
     detail:
       "Fee structure, hostel details and the documents you will need at admission — sent over email.",
   },
@@ -68,8 +68,8 @@ export default async function ThankYouPage({
               </svg>
             </span>
 
-            <h1 className="mt-6 text-balance text-3xl font-semibold leading-tight sm:text-4xl">
-              Thank you — your enquiry is in
+            <h1 className="type-h2 mt-6 text-balance">
+              Thank You — Your Enquiry Is In
             </h1>
 
             <p className="mx-auto mt-4 max-w-xl text-pretty leading-relaxed text-white/85">
@@ -90,16 +90,16 @@ export default async function ThankYouPage({
                 href="/"
                 className="inline-flex items-center rounded-brand border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
               >
-                Back to the programme
+                Back To The Programme
               </Link>
             </div>
           </div>
         </section>
 
         <section className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-6 lg:px-8">
-          <h2 className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-brand">
-            What happens next
-          </h2>
+          <p className="type-eyebrow text-center text-brand">
+            What Happens Next
+          </p>
 
           <ol className="mt-8 grid gap-5 sm:grid-cols-3">
             {whatHappensNext.map((step, index) => (
@@ -110,8 +110,8 @@ export default async function ThankYouPage({
                 <span className="text-sm font-semibold text-brand">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-2.5 text-base font-semibold">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
+                <h3 className="type-h3 mt-2.5">{step.title}</h3>
+                <p className="type-body mt-2 text-muted">
                   {step.detail}
                 </p>
               </li>
@@ -119,10 +119,10 @@ export default async function ThankYouPage({
           </ol>
 
           <div className="mt-10 rounded-brand-lg bg-canvas-alt p-6 sm:p-8">
-            <h3 className="text-base font-semibold">
-              Keep these ready for the call
+            <h3 className="type-h3">
+              Keep These Ready For The Call
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
+            <p className="type-body mt-2 text-muted">
               {admissionSteps[2].detail}
             </p>
           </div>

@@ -16,8 +16,8 @@ export function TestimonialsSection() {
   return (
     <Section tone="alt">
       <SectionHeading
-        eyebrow="Real experiences. Real impact."
-        title="What students say once they are on the other side"
+        eyebrow="Real Experiences. Real Impact."
+        title="What Students Say Once They Are On The Other Side"
       />
 
       {/* Masonry columns keep short and long quotes from leaving ragged gaps. */}

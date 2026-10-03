@@ -35,34 +35,53 @@ npm run dev
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Public origin. Drives canonical, OG and sitemap URLs. |
-| `SHEETS_WEBHOOK_URL` | Apps Script `/exec` URL that appends leads to the sheet. |
-| `SHEETS_WEBHOOK_SECRET` | Shared token; must match `SECRET` in the Apps Script. |
-| `RESEND_API_KEY` | Resend API key for the lead notification email. |
-| `LEAD_FROM_EMAIL` | Sender, on a domain verified in Resend. |
-| `LEAD_NOTIFY_EMAILS` | Comma-separated counsellors who receive every lead. |
-| `NEXT_PUBLIC_GTAG_ID` | Google Ads tag, e.g. `AW-1234567890`. Blank disables gtag. |
-| `NEXT_PUBLIC_ADS_CONVERSION_LABEL` | Conversion label fired on `/thank-you`. |
+| `GOOGLE_SHEET_WEBHOOK_URL` | Apps Script `/exec` URL that appends leads to the sheet. |
+| `GOOGLE_SHEET_SECRET` | Shared token; must match `SECRET` in the Apps Script. |
+| `GOOGLE_SHEET_TAB` | Tab for this landing page. Created with its header row on the first lead. Defaults to `Leads`. |
+| `SMTP_HOST` / `SMTP_PORT` | Mailbox host; 465 for SSL/TLS, 587 for STARTTLS. |
+| `SMTP_USER` / `SMTP_PASS` | Full mailbox address and password. Mail is sent from `SMTP_USER`. |
+| `LEAD_EMAIL_TO` | Comma-separated counsellors who receive every lead. |
+| `NEXT_PUBLIC_GOOGLE_ADS_ID` | Google Ads tag, e.g. `AW-1234567890`. Blank disables gtag. |
+| `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL` | Conversion label fired on `/thank-you`. |
 
-`NEXT_PUBLIC_*` values are inlined into the client bundle **at build time**, so
-they must be present for `next build`, not just for the running process. A
-value supplied only at runtime renders on the server and then disappears when
-React hydrates.
+Both Ads variables are needed: the ID loads gtag, the label identifies the
+conversion. `NEXT_PUBLIC_*` values are inlined into the client bundle **at
+build time**, so they must be present for `next build`, not just for the
+running process. A value supplied only at runtime renders on the server and
+then disappears when React hydrates.
 
 ## Floating WhatsApp button
 
-The number lives in `PARTNER_WHATSAPP` in `lib/site.ts`, not in the environment,
-for exactly the build-time reason above. Set `number` to digits only with the
-country code and no `+` — `919876543210`. Empty hides the button. It appears on
-the landing page (lifted clear of the mobile call/apply bar) and on
-`/thank-you`, and opens a chat pre-filled with an admissions greeting.
+The number lives in `PARTNER_WHATSAPP` in `lib/site.ts`, not in the
+environment, for exactly the build-time reason above. Digits only with the
+country code and no `+`. Empty hides the button. The label reads "Talk to an
+admission counsellor" and expands whenever the reader stops scrolling.
 
 ## Google Sheet setup
 
-`docs/google-sheet.gs` holds the Apps Script that receives leads. Paste it into
-the sheet's Apps Script editor, set `SECRET`, deploy it as a Web App
-(execute as **Me**, access **Anyone**), and put the `/exec` URL into
-`SHEETS_WEBHOOK_URL`. The script creates the `Leads` tab and its header row on
-the first write. Re-deploy a **new version** after editing the script.
+`apps-script/lead-webhook.gs` receives the leads. Paste it into the sheet's
+Apps Script editor, set `SECRET`, deploy as a Web App (execute as **Me**,
+access **Anyone**), and put the `/exec` URL in `GOOGLE_SHEET_WEBHOOK_URL`. The
+tab named by `GOOGLE_SHEET_TAB` and its header row are created on the first
+lead, so one script can serve several landing pages.
+
+Columns, in order: Submitted at, Name, Phone, Email, City, Programme, Form,
+utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid, Page URL,
+Consent Given, Consent Text, Consent Timestamp (UTC), IP Address, User Agent.
+`HEADERS` and `toRow` in `lib/integrations/sheets.ts` must stay in lockstep —
+the headers go up once, with the first lead, so a later mismatch silently files
+every row under the wrong column.
+
+## Consent
+
+The form cannot be submitted until the consent box is ticked, and
+`validateLead` rejects a lead without it server-side too — the disabled button
+is the courtesy, the server check is the rule. Each lead stores the consent
+wording shown at the time (`CONSENT_TEXT` in `lib/site.ts`), a UTC timestamp,
+the IP from `x-forwarded-for`, and the user agent. All four are set on the
+server: taking them from the request would let a crafted POST claim consent to
+wording that was never displayed. Editing `CONSENT_TEXT` changes future records
+only, which is the point — never edit it to cover past ones.
 
 ## Lead flow
 
@@ -72,9 +91,11 @@ the first write. Re-deploy a **new version** after editing the script.
    from the popup ten minutes later is still attributed.
 2. `POST /api/lead` validates the payload with the same rules the browser used,
    drops honeypot submissions, and normalises the phone to `+91XXXXXXXXXX`.
-3. The sheet append and the Resend email are attempted in parallel. If either
-   succeeds the lead is accepted; only if **both** fail does the form tell the
-   visitor to call instead.
+3. Three things are attempted in parallel: the sheet append, the team email and
+   the student's acknowledgement. The lead is accepted if the sheet **or** the
+   team email lands; only if both fail does the form tell the visitor to call
+   instead. A failed student acknowledgement is logged but never fails the
+   lead — the enquiry is recorded, the student just lacks a receipt.
 4. The browser is sent to `/thank-you`, which fires the Google Ads conversion
    and is `noindex`.
 
@@ -97,9 +118,9 @@ lib/
   site.ts               brand, contact and intake constants
   lead.ts               shared validation
   structured-data.ts    schema.org graph
-  integrations/         sheets.ts, email.ts
+  integrations/         sheets.ts (Apps Script webhook), email.ts (SMTP)
 public/                 logos and photographs from iiebm.com
-docs/google-sheet.gs    the Apps Script
+apps-script/            the Google Sheets webhook
 ```
 
 ## Design
@@ -107,3 +128,21 @@ docs/google-sheet.gs    the Apps Script
 Tokens in `app/globals.css` mirror iiebm.com: `#003FA3` primary blue, the
 `#253A73` navy from their placement cards, Poppins, and a 12px card radius — so
 a student arriving from an ad does not feel handed to a third party.
+
+Type is one scale, defined once in `app/globals.css` and used through the
+`.type-*` classes, so a heading is the same size in every section:
+
+| Class | mobile | ≥640px | ≥1024px |
+| --- | --- | --- | --- |
+| `.type-h1` | 32px | 40px | 48px |
+| `.type-h2` | 26px | 32px | 36px |
+| `.type-h3` | 18px | 20px | 20px |
+| `.type-h4` | 16px | 16px | 16px |
+| `.type-lead` | 16px | 18px | 18px |
+| `.type-body` | 15px | 15px | 15px |
+| `.type-small` | 13px | 13px | 13px |
+| `.type-eyebrow` | 12px | 12px | 12px |
+
+Sizes step at 640px and 1024px only — the same two breakpoints the layouts use.
+Reach for a `.type-*` class rather than a one-off `text-lg`, or the scale drifts
+apart again.

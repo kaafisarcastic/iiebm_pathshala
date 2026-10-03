@@ -7,7 +7,8 @@ import {
   type LeadRecord,
 } from "@/lib/lead";
 import { appendLeadToSheet } from "@/lib/integrations/sheets";
-import { emailLead } from "@/lib/integrations/email";
+import { emailStudent, emailTeam } from "@/lib/integrations/email";
+import { CONSENT_TEXT } from "@/lib/site";
 
 function str(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -22,13 +23,27 @@ function istTimestamp(): string {
   }).format(new Date());
 }
 
+/**
+ * Caller IP for the consent record. Behind Vercel or any proxy the socket
+ * address is the proxy, so the forwarded headers are what count — the first
+ * entry in x-forwarded-for is the original client.
+ */
+function clientIp(request: NextRequest): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0]!.trim();
+  return request.headers.get("x-real-ip")?.trim() ?? "";
+}
+
 export async function POST(request: NextRequest) {
   let payload: Record<string, unknown>;
 
   try {
     payload = (await request.json()) as Record<string, unknown>;
   } catch {
-    return Response.json({ ok: false, message: "Malformed request." }, { status: 400 });
+    return Response.json(
+      { ok: false, message: "Malformed request." },
+      { status: 400 },
+    );
   }
 
   // Honeypot: a real visitor never sees this field, bots fill everything.
@@ -42,6 +57,7 @@ export async function POST(request: NextRequest) {
     email: str(payload.email),
     city: str(payload.city),
     program: str(payload.program),
+    consentGiven: payload.consentGiven === true,
   };
 
   const errors = validateLead(lead);
@@ -62,24 +78,35 @@ export async function POST(request: NextRequest) {
     utmCampaign: str(payload.utmCampaign),
     utmTerm: str(payload.utmTerm),
     utmContent: str(payload.utmContent),
+    // The server owns the consent record. Taking the text or the time from the
+    // request would let a crafted POST claim consent to wording we never showed.
+    consentText: CONSENT_TEXT,
+    consentTimestamp: new Date().toISOString(),
+    ipAddress: clientIp(request),
+    userAgent: request.headers.get("user-agent")?.slice(0, 500) ?? "",
   };
 
-  // Both destinations are attempted regardless of whether the other fails —
-  // a lead that reaches only the sheet is still a lead worth keeping.
-  const [sheet, mail] = await Promise.allSettled([
+  // All three are attempted regardless of whether the others fail — a lead
+  // that reaches only the sheet is still a lead worth keeping.
+  const [sheet, team, student] = await Promise.allSettled([
     appendLeadToSheet(record),
-    emailLead(record),
+    emailTeam(record),
+    emailStudent(record),
   ]);
 
   if (sheet.status === "rejected") {
     console.error("[lead] sheet append failed", sheet.reason);
   }
-  if (mail.status === "rejected") {
-    console.error("[lead] email notification failed", mail.reason);
+  if (team.status === "rejected") {
+    console.error("[lead] team notification failed", team.reason);
+  }
+  if (student.status === "rejected") {
+    // Not fatal: the enquiry is recorded, the student just lacks a receipt.
+    console.error("[lead] student acknowledgement failed", student.reason);
   }
 
-  if (sheet.status === "rejected" && mail.status === "rejected") {
-    // Nothing was recorded anywhere. Say so, so the form can offer the phone number.
+  if (sheet.status === "rejected" && team.status === "rejected") {
+    // Nothing reached the team. Say so, so the form can offer the phone number.
     return Response.json(
       {
         ok: false,

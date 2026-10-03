@@ -14,7 +14,7 @@ export function ProgramsSection() {
     <Section id={ANCHORS.programs}>
       <SectionHeading
         eyebrow="Programs"
-        title="Three ways into a management career at IIEBM"
+        title="Three Ways Into A Management Career At IIEBM"
         description="Admissions are open across all three for the 2026-28 intake."
       />
 
@@ -24,13 +24,13 @@ export function ProgramsSection() {
             key={program.name}
             className="flex flex-col rounded-brand-lg border border-line bg-white p-6 sm:p-7"
           >
-            <h3 className="text-2xl font-semibold text-brand">
+            <h3 className="type-h3 text-brand">
               {program.name}
             </h3>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-muted">
+            <p className="type-eyebrow mt-1 text-muted">
               {program.meta}
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-muted">
+            <p className="type-body mt-4 text-muted">
               {program.summary}
             </p>
 
@@ -64,7 +64,7 @@ export function ProgramsSection() {
               variant="outline"
               className="mt-6 w-full"
             >
-              Enquire about {program.name}
+              Enquire About {program.name}
             </CtaButton>
           </li>
         ))}
@@ -72,8 +72,8 @@ export function ProgramsSection() {
 
       <div className="mt-20">
         <SectionHeading
-          eyebrow="Our 5 shades programs"
-          title="Five specialisations within the PGDM"
+          eyebrow="Our 5 Shades Programs"
+          title="Five Specialisations Within The PGDM"
           description={PGDM_OVERVIEW}
         />
       </div>
@@ -95,15 +95,15 @@ export function ProgramsSection() {
             </div>
 
             <div className="flex flex-1 flex-col p-6">
-              <h3 className="text-lg font-semibold leading-snug">
+              <h3 className="type-h3">
                 {program.name}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="type-body mt-2 text-muted">
                 {program.overview}
               </p>
 
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-brand">
-                Electives include
+              <p className="type-eyebrow mt-5 text-brand">
+                Electives Include
               </p>
               <ul className="mt-2.5 flex flex-wrap gap-1.5">
                 {program.electives.slice(0, 4).map((elective) => (
@@ -120,15 +120,15 @@ export function ProgramsSection() {
         ))}
 
         <li className="flex flex-col justify-center gap-4 rounded-brand-lg bg-brand p-8 text-white">
-          <h3 className="text-xl font-semibold leading-snug">
-            Not sure which specialisation fits you?
+          <h3 className="type-h3">
+            Not Sure Which Specialisation Fits You?
           </h3>
-          <p className="text-sm leading-relaxed text-white/80">
+          <p className="type-body text-white/80">
             A counsellor will walk you through where each specialisation places,
             what it demands, and which one matches your graduation background.
           </p>
           <CtaButton href={`#${ANCHORS.form}`} variant="light" className="w-fit">
-            Talk it through
+            Talk It Through
           </CtaButton>
         </li>
       </ul>

@@ -14,7 +14,7 @@ export function AdmissionsSection() {
     <Section id={ANCHORS.admissions}>
       <SectionHeading
         eyebrow="Admissions"
-        title={`How admission to the ${INTAKE.batch} batch works`}
+        title={`How Admission To The ${INTAKE.batch} Batch Works`}
         description="Five steps, and a counsellor with you through all of them."
       />
 
@@ -25,8 +25,8 @@ export function AdmissionsSection() {
             className="rounded-brand-lg border border-line bg-white p-6"
           >
             <span className="text-sm font-semibold text-brand">{step.step}</span>
-            <h3 className="mt-2.5 text-base font-semibold">{step.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
+            <h3 className="type-h3 mt-2.5">{step.title}</h3>
+            <p className="type-body mt-2 text-muted">
               {step.detail}
             </p>
           </li>
@@ -35,7 +35,7 @@ export function AdmissionsSection() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_minmax(0,22rem)]">
         <div className="rounded-brand-lg border border-line bg-white p-6 sm:p-8">
-          <h3 className="text-base font-semibold">Who is eligible</h3>
+          <h3 className="type-h3">Who Is Eligible</h3>
           <dl className="mt-5 flex flex-col gap-5">
             {eligibility.map((item) => (
               <div key={item.title}>
@@ -51,7 +51,7 @@ export function AdmissionsSection() {
         </div>
 
         <div className="flex flex-col rounded-brand-lg bg-navy p-6 text-white sm:p-8">
-          <h3 className="text-base font-semibold">Admission calendar</h3>
+          <h3 className="type-h3">Admission Calendar</h3>
           <dl className="mt-5 flex flex-col gap-4">
             {admissionCalendar.map((row) => (
               <div
@@ -73,7 +73,7 @@ export function AdmissionsSection() {
             variant="light"
             className="mt-6 w-full"
           >
-            Start my application
+            Start My Application
           </CtaButton>
         </div>
       </div>

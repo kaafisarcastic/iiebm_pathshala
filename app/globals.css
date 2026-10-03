@@ -27,6 +27,94 @@
   --radius-brand-lg: 20px;
 }
 
+/*
+  Type scale. One definition per level, used everywhere, so an h2 is the same
+  size in every section and at every breakpoint. Sizes step at 640px and
+  1024px only — the same two breakpoints the layouts use.
+
+            mobile   ≥640px   ≥1024px
+  .type-h1    32px     40px     48px
+  .type-h2    26px     32px     36px
+  .type-h3    18px     20px     20px
+  .type-h4    16px     16px     16px
+  .type-lead  16px     18px     18px
+  .type-body  15px     15px     15px
+  .type-small 13px     13px     13px
+  .type-eyebrow 12px   12px     12px
+*/
+.type-h1 {
+  font-size: 2rem;
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.type-h2 {
+  font-size: 1.625rem;
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.type-h3 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.type-h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.type-lead {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.type-body {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.type-small {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.type-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+@media (min-width: 640px) {
+  .type-h1 {
+    font-size: 2.5rem;
+  }
+  .type-h2 {
+    font-size: 2rem;
+  }
+  .type-h3 {
+    font-size: 1.25rem;
+  }
+  .type-lead {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .type-h1 {
+    font-size: 3rem;
+  }
+  .type-h2 {
+    font-size: 2.25rem;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   /* Offset for the sticky header when jumping to an anchor. */

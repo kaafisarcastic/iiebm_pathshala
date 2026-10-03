@@ -7,8 +7,8 @@ export function StudentLifeSection() {
   return (
     <Section>
       <SectionHeading
-        eyebrow="Life on campus"
-        title="Two years you actually live, not just attend"
+        eyebrow="Life On Campus"
+        title="Two Years You Actually Live, Not Just Attend"
         description="Library, labs, auditorium, hostel, gym and ground — all inside one campus on Wakad–Marunje Road."
       />
 

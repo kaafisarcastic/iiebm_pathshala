@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { INSTITUTE, PARTNER_NAME } from "@/lib/site";
+import { FOOTER_DISCLOSURE, INSTITUTE } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -55,22 +55,11 @@ export function Footer() {
 
       <div className="border-t border-line">
         <div className="mx-auto w-full max-w-6xl px-5 py-6 sm:px-6 lg:px-8">
-          <p className="text-xs leading-relaxed text-muted">
-            This page is operated by {PARTNER_NAME} as an authorised admissions
-            partner of {INSTITUTE.name}, Pune. Enquiries submitted here are
-            shared with the institute&apos;s admissions team. All programme,
-            placement and ranking information is published by{" "}
-            {INSTITUTE.shortName} on{" "}
-            <a
-              href={INSTITUTE.website}
-              className="underline underline-offset-2"
-              rel="noopener"
-            >
-              iiebm.com
-            </a>
-            . {INSTITUTE.shortName} is an institute under the{" "}
-            {INSTITUTE.legalName}. Logos and trademarks belong to their
-            respective owners.
+          <p className="type-small text-muted">{FOOTER_DISCLOSURE}</p>
+          <p className="type-small mt-3 text-muted">
+            Copyright &copy; {INSTITUTE.name}. {INSTITUTE.shortName} is an
+            institute under the {INSTITUTE.legalName}. Logos and trademarks
+            belong to their respective owners.
           </p>
         </div>
       </div>

@@ -2,10 +2,10 @@ import Script from "next/script";
 
 /**
  * Loads gtag.js for Google Ads conversion tracking. Renders nothing until
- * NEXT_PUBLIC_GTAG_ID is set, so local and preview builds stay untracked.
+ * NEXT_PUBLIC_GOOGLE_ADS_ID is set, so local and preview builds stay untracked.
  */
 export function GoogleTag() {
-  const id = process.env.NEXT_PUBLIC_GTAG_ID;
+  const id = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
   if (!id) return null;
 
   return (

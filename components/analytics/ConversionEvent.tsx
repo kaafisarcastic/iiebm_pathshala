@@ -14,8 +14,8 @@ declare global {
  */
 export function ConversionEvent() {
   useEffect(() => {
-    const id = process.env.NEXT_PUBLIC_GTAG_ID;
-    const label = process.env.NEXT_PUBLIC_ADS_CONVERSION_LABEL;
+    const id = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+    const label = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
 
     if (!id || !label || typeof window.gtag !== "function") return;
 

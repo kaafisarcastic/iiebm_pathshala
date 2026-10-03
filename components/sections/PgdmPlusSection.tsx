@@ -7,7 +7,7 @@ export function PgdmPlusSection() {
     <Section tone="alt">
       <SectionHeading
         eyebrow="PGDM PLUS"
-        title="The PGDM, plus a year of SAP with SAP University Alliances"
+        title="The PGDM, Plus A Year Of SAP With SAP University Alliances"
         description={PGDM_PLUS_OVERVIEW}
       />
 
@@ -20,8 +20,8 @@ export function PgdmPlusSection() {
             <span className="inline-flex rounded-full bg-brand-tint px-2.5 py-1 text-xs font-semibold text-brand">
               {module.code}
             </span>
-            <h3 className="mt-3.5 text-base font-semibold">{module.name}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
+            <h3 className="type-h3 mt-3.5">{module.name}</h3>
+            <p className="type-body mt-2 text-muted">
               {module.description}
             </p>
           </li>
@@ -29,8 +29,8 @@ export function PgdmPlusSection() {
       </ul>
 
       <div className="mt-8 rounded-brand-lg border border-line bg-white p-6 sm:p-8">
-        <h3 className="text-base font-semibold">
-          Certifications students earn alongside the diploma
+        <h3 className="type-h3">
+          Certifications Students Earn Alongside The Diploma
         </h3>
         <ul className="mt-4 flex flex-wrap gap-2">
           {certifications.map((certification) => (

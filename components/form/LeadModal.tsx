@@ -126,16 +126,16 @@ export function LeadModal() {
           </svg>
         </button>
 
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+        <p className="type-eyebrow text-brand">
           Batch {INTAKE.batch}
         </p>
         <h2
           id="lead-modal-title"
-          className="mt-2 text-2xl font-semibold leading-tight"
+          className="type-h2 mt-2"
         >
-          Talk to an admissions counsellor
+          Talk To An Admissions Counsellor
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-muted">
+        <p className="type-body mt-2 text-muted">
           Two minutes on the phone will tell you whether you are eligible, which
           specialisation fits you, and what the next step is.
         </p>
@@ -144,7 +144,7 @@ export function LeadModal() {
           <LeadForm
             idPrefix="modal"
             source="15s-popup"
-            submitLabel="Get my callback"
+            submitLabel="Get My Callback"
             onSuccess={close}
           />
         </div>

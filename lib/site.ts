@@ -9,7 +9,48 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 /** The consultancy running the ads. Shown in the partner disclosure. */
-export const PARTNER_NAME = "PathshalaHub";
+export const PARTNER_NAME = "Pathshala Hub";
+
+/**
+ * Consent wording shown beside the form's required checkbox. Stored verbatim
+ * alongside each lead, with the moment it was accepted, so the record shows
+ * what the student actually agreed to rather than what the page says today.
+ * Changing this changes future records only — never edit it to cover past ones.
+ */
+export const CONSENT_TEXT =
+  "By submitting this form, you agree to be contacted by Pathshala Hub and the respective institution regarding admission-related information.";
+
+/** Footer disclosure. */
+export const FOOTER_DISCLOSURE = `This admission information page is managed by ${PARTNER_NAME}, an authorised admission partner of IIEBM, Indus Business School. Programme, eligibility, fee and admission information is provided by the respective institution.`;
+
+/**
+ * Exams IIEBM names in Admission FAQ Q.29. Do not add to this list without a
+ * matching line on iiebm.com — it reads as a claim about what they accept.
+ */
+export const ACCEPTED_EXAMS = [
+  "CAT",
+  "XAT",
+  "CMAT",
+  "MAT",
+  "GMAT",
+  "MH-CET",
+  "ATMA",
+] as const;
+
+/**
+ * Exams aspirants often sit instead. IIEBM does not list these, so the page
+ * points those candidates at a counsellor rather than implying acceptance.
+ */
+export const OTHER_EXAMS = ["NMAT", "SNAP"] as const;
+
+/**
+ * Aspirant tools. Both are unbuilt — the links stay inert until a real URL is
+ * set here, so nothing on the page points at a dead route.
+ */
+export const TOOLS = {
+  catPredictor: { label: "CAT Predictor", href: "" },
+  catScoreCalculator: { label: "CAT Score Calculator", href: "" },
+} as const;
 
 /** The institute. Every figure on the page is sourced from iiebm.com. */
 export const INSTITUTE = {

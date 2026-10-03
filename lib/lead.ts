@@ -6,6 +6,8 @@ export type Lead = {
   email: string;
   city: string;
   program: string;
+  /** The consent checkbox. The form cannot be submitted without it. */
+  consentGiven: boolean;
 };
 
 /** Extra context captured server-side, never filled in by the visitor. */
@@ -20,9 +22,18 @@ export type LeadRecord = Lead & {
   utmCampaign: string;
   utmTerm: string;
   utmContent: string;
+  /** The wording shown at the time, stored so the record stands on its own. */
+  consentText: string;
+  /** ISO-8601 UTC, stamped server-side — a client clock proves nothing. */
+  consentTimestamp: string;
+  ipAddress: string;
+  userAgent: string;
 };
 
 export type LeadFieldErrors = Partial<Record<keyof Lead, string>>;
+
+/** Fields the visitor types into, i.e. everything except the consent box. */
+export type LeadTextField = Exclude<keyof Lead, "consentGiven">;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -69,7 +80,11 @@ export function validateLead(input: Partial<Lead>): LeadFieldErrors {
   }
 
   if (!programOptions.includes(input.program ?? "")) {
-    errors.program = "Choose the program you are interested in.";
+    errors.program = "Choose the programme you are interested in.";
+  }
+
+  if (input.consentGiven !== true) {
+    errors.consentGiven = "Please accept the consent statement to continue.";
   }
 
   return errors;
@@ -85,4 +100,5 @@ export const emptyLead: Lead = {
   email: "",
   city: "",
   program: "",
+  consentGiven: false,
 };

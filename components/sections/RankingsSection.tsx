@@ -10,8 +10,8 @@ export function RankingsSection() {
         <div className="flex flex-col">
           <SectionHeading
             align="left"
-            eyebrow="Ranking & recognitions"
-            title="Ranked by the people who rank business schools"
+            eyebrow="Ranking & Recognitions"
+            title="Ranked By The People Who Rank Business Schools"
             description="Independent rankings from Times B School, IIRF and Outlook."
           />
 
@@ -46,7 +46,7 @@ export function RankingsSection() {
                 <p className="text-pretty text-base font-medium leading-snug text-ink">
                   {ranking.claim}
                 </p>
-                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+                <p className="type-eyebrow mt-2 text-muted">
                   {ranking.publisher}
                 </p>
               </div>

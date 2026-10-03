@@ -10,15 +10,15 @@ export function FoundationSection() {
         <div>
           <SectionHeading
             align="left"
-            eyebrow="Foundation of excellence"
-            title="Built on Armed Forces ethos, since 2000"
+            eyebrow="Foundation Of Excellence"
+            title="Built On Armed Forces Ethos, Since 2000"
           />
 
           <div className="mt-5 flex flex-col gap-4">
             {ABOUT_PARAGRAPHS.map((paragraph) => (
               <p
                 key={paragraph.slice(0, 32)}
-                className="text-sm leading-relaxed text-muted"
+                className="type-body text-muted"
               >
                 {paragraph}
               </p>
@@ -64,9 +64,7 @@ export function FoundationSection() {
               key={group.title}
               className="rounded-brand-lg border border-line bg-white p-6"
             >
-              <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-brand">
-                {group.title}
-              </h3>
+              <p className="type-eyebrow text-brand">{group.title}</p>
               <dl className="mt-5 flex flex-col gap-4">
                 {group.stats.map((stat) => (
                   <div

@@ -4,6 +4,7 @@ import { PlacementHighlightsSection } from "@/components/sections/PlacementHighl
 import { RecruitersSection } from "@/components/sections/RecruitersSection";
 import { RankingsSection } from "@/components/sections/RankingsSection";
 import { ProgramsSection } from "@/components/sections/ProgramsSection";
+import { EntranceExamsSection } from "@/components/sections/EntranceExamsSection";
 import { PgdmPlusSection } from "@/components/sections/PgdmPlusSection";
 import { FoundationSection } from "@/components/sections/FoundationSection";
 import { CampusSection } from "@/components/sections/CampusSection";
@@ -65,6 +66,9 @@ export default function HomePage() {
 
         {/* Student feedback */}
         <TestimonialsSection />
+
+        {/* Accepted entrance exams, plus the CAT tools */}
+        <EntranceExamsSection />
 
         {/* Eligibility, the five-step process and the admission calendar */}
         <AdmissionsSection />

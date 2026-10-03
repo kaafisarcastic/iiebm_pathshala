@@ -8,7 +8,7 @@ export function FaqSection() {
     <Section id={ANCHORS.faq} tone="alt">
       <SectionHeading
         eyebrow="Admission FAQ"
-        title="The questions we get asked before every intake"
+        title="The Questions We Get Asked Before Every Intake"
       />
 
       <div className="mx-auto mt-12 max-w-3xl divide-y divide-line overflow-hidden rounded-brand-lg border border-line bg-white">
@@ -34,7 +34,7 @@ export function FaqSection() {
                 />
               </svg>
             </summary>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
+            <p className="type-body mt-3 text-muted">
               {faq.answer}
             </p>
           </details>

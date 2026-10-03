@@ -8,15 +8,15 @@ export function PlacementHighlightsSection() {
   return (
     <Section id={ANCHORS.placements} tone="alt">
       <SectionHeading
-        eyebrow="Placement highlights"
-        title="The numbers the batch actually walked away with"
+        eyebrow="Placement Highlights"
+        title="The Numbers The Batch Actually Walked Away With"
         description="Published by IIEBM for the PGDM PLUS and PGDM cohorts."
       />
 
       <div className="mt-12 grid gap-6 lg:grid-cols-2">
         <article className="rounded-brand-lg border border-line bg-white p-5 sm:p-8">
-          <h3 className="text-lg font-semibold">PGDM PLUS</h3>
-          <p className="mt-1 text-sm text-muted">
+          <h3 className="type-h3">PGDM PLUS</h3>
+          <p className="type-body mt-1 text-muted">
             The PGDM paired with the SAP certification year.
           </p>
 
@@ -39,8 +39,8 @@ export function PlacementHighlightsSection() {
         </article>
 
         <article className="rounded-brand-lg border border-line bg-white p-5 sm:p-8">
-          <h3 className="text-lg font-semibold">PGDM</h3>
-          <p className="mt-1 text-sm text-muted">
+          <h3 className="type-h3">PGDM</h3>
+          <p className="type-body mt-1 text-muted">
             The two-year flagship management program.
           </p>
 
@@ -80,7 +80,7 @@ export function PlacementHighlightsSection() {
 
       <div className="mt-10 flex justify-center">
         <CtaButton href={`#${ANCHORS.form}`}>
-          Ask about placements for your specialisation
+          Ask About Placements For Your Specialisation
         </CtaButton>
       </div>
     </Section>

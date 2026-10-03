@@ -7,8 +7,8 @@ export function CollaborationsSection() {
   return (
     <Section>
       <SectionHeading
-        eyebrow="Academic collaborations"
-        title="Certification partners behind the curriculum"
+        eyebrow="Academic Collaborations"
+        title="Certification Partners Behind The Curriculum"
       />
 
       <div className="mt-10">

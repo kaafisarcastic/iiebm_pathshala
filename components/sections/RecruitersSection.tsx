@@ -13,8 +13,8 @@ export function RecruitersSection() {
   return (
     <Section>
       <SectionHeading
-        eyebrow="Get dream jobs with IIEBM"
-        title={`Associated with ${RECRUITING_PARTNER_COUNT} companies across sectors`}
+        eyebrow="Get Dream Jobs With IIEBM"
+        title={`Associated With ${RECRUITING_PARTNER_COUNT} Companies Across Sectors`}
         description="Students choose a profile from a variety of organisations, so the specialisation you pick is not the only thing that decides where you land."
       />
 

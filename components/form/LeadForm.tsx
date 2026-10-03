@@ -9,8 +9,9 @@ import {
   validateLead,
   type Lead,
   type LeadFieldErrors,
+  type LeadTextField,
 } from "@/lib/lead";
-import { INSTITUTE, PARTNER_NAME } from "@/lib/site";
+import { CONSENT_TEXT, INSTITUTE } from "@/lib/site";
 
 /** Campaign parameters worth carrying into the sheet alongside the lead. */
 const TRACKING_KEYS = [
@@ -54,7 +55,7 @@ function captureTracking(): Record<string, string> {
 }
 
 type Field = {
-  name: keyof Lead;
+  name: LeadTextField;
   label: string;
   type: "text" | "tel" | "email";
   placeholder: string;
@@ -65,14 +66,14 @@ type Field = {
 const fields: Field[] = [
   {
     name: "name",
-    label: "Full name",
+    label: "Full Name",
     type: "text",
     placeholder: "Your name",
     autoComplete: "name",
   },
   {
     name: "phone",
-    label: "Mobile number",
+    label: "Mobile Number",
     type: "tel",
     placeholder: "10-digit mobile",
     autoComplete: "tel",
@@ -106,7 +107,7 @@ type LeadFormProps = {
 
 export function LeadForm({
   source,
-  submitLabel = "Request a callback",
+  submitLabel = "Request A Callback",
   onSuccess,
   idPrefix,
 }: LeadFormProps) {
@@ -124,12 +125,22 @@ export function LeadForm({
   const [status, setStatus] = useState<"idle" | "sending">("idle");
   const honeypot = useRef<HTMLInputElement>(null);
 
-  function update(field: keyof Lead, value: string) {
+  function update(field: LeadTextField, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
     setErrors((current) => {
       if (!current[field]) return current;
       const next = { ...current };
       delete next[field];
+      return next;
+    });
+  }
+
+  function setConsent(checked: boolean) {
+    setValues((current) => ({ ...current, consentGiven: checked }));
+    setErrors((current) => {
+      if (!current.consentGiven) return current;
+      const next = { ...current };
+      delete next.consentGiven;
       return next;
     });
   }
@@ -153,6 +164,7 @@ export function LeadForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...values,
+          consentGiven: values.consentGiven,
           company: honeypot.current?.value ?? "",
           source,
           pageUrl: window.location.href,
@@ -236,7 +248,7 @@ export function LeadForm({
           htmlFor={`${idPrefix}-program`}
           className="text-xs font-semibold uppercase tracking-wide text-muted"
         >
-          Program of interest
+          Programme of Interest
         </label>
         <select
           id={`${idPrefix}-program`}
@@ -251,7 +263,7 @@ export function LeadForm({
             values.program ? "" : "text-muted/70"
           }`}
         >
-          <option value="">Select a program</option>
+          <option value="">Select a programme</option>
           {programOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -276,24 +288,61 @@ export function LeadForm({
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
 
+      {/*
+       * Consent gate. The checkbox is required by validateLead as well, so a
+       * crafted POST cannot skip it — the disabled button is the courtesy, the
+       * server check is the rule.
+       */}
+      <div className="rounded-brand border border-line bg-canvas-alt p-3.5">
+        <label
+          htmlFor={`${idPrefix}-consent`}
+          className="flex cursor-pointer items-start gap-3"
+        >
+          <input
+            id={`${idPrefix}-consent`}
+            name="consentGiven"
+            type="checkbox"
+            checked={values.consentGiven}
+            onChange={(event) => setConsent(event.target.checked)}
+            aria-describedby={`${idPrefix}-consent-text`}
+            aria-invalid={errors.consentGiven ? true : undefined}
+            className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-brand"
+          />
+          <span
+            id={`${idPrefix}-consent-text`}
+            className="type-small text-muted"
+          >
+            {CONSENT_TEXT}
+          </span>
+        </label>
+      </div>
+
+      {errors.consentGiven ? (
+        <p className="type-small -mt-2 text-red-600">{errors.consentGiven}</p>
+      ) : null}
+
       {formError ? (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="type-small text-red-600">
           {formError}
         </p>
       ) : null}
 
       <button
         type="submit"
-        disabled={status === "sending"}
-        className="mt-1 inline-flex w-full items-center justify-center rounded-brand bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark disabled:cursor-not-allowed disabled:opacity-70"
+        disabled={status === "sending" || !values.consentGiven}
+        className="mt-1 inline-flex w-full items-center justify-center rounded-brand bg-brand px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-dark disabled:cursor-not-allowed disabled:bg-muted/40 disabled:text-white"
       >
         {status === "sending" ? "Sending…" : submitLabel}
       </button>
 
-      <p className="text-center text-xs leading-relaxed text-muted">
-        By submitting, you agree to be contacted about admissions by{" "}
-        {INSTITUTE.shortName} and its authorised admissions partner,{" "}
-        {PARTNER_NAME}.
+      <p className="type-small text-center text-muted">
+        Or call{" "}
+        <a
+          href={`tel:${INSTITUTE.phoneHref}`}
+          className="font-semibold text-brand"
+        >
+          {INSTITUTE.phone}
+        </a>
       </p>
     </form>
   );
