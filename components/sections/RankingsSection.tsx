@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { rankings } from "@/data/rankings";
+import { asset } from "@/lib/site";
 
 export function RankingsSection() {
   return (
@@ -17,7 +18,7 @@ export function RankingsSection() {
 
           <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-brand-lg bg-canvas">
             <Image
-              src="/campus/convocation.webp"
+              src={asset("/campus/convocation.webp")}
               alt="The IIEBM Convocation Ceremony 2025 with the graduating batch on stage"
               fill
               sizes="(min-width: 1024px) 22rem, 90vw"

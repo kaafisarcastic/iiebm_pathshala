@@ -7,7 +7,7 @@ import {
   programsOffered,
   specialisations,
 } from "@/data/programs";
-import { ANCHORS } from "@/lib/site";
+import { ANCHORS, asset } from "@/lib/site";
 
 export function ProgramsSection() {
   return (
@@ -86,7 +86,7 @@ export function ProgramsSection() {
           >
             <div className="relative aspect-[4/3] w-full bg-canvas-alt">
               <Image
-                src={program.image}
+                src={asset(program.image)}
                 alt={`${program.name} at IIEBM, Pune`}
                 fill
                 sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 90vw"

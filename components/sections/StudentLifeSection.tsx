@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { lifePhotos } from "@/data/life";
+import { asset } from "@/lib/site";
 
 export function StudentLifeSection() {
   return (
@@ -27,7 +28,7 @@ export function StudentLifeSection() {
               }`}
             >
               <Image
-                src={photo.src}
+                src={asset(photo.src)}
                 alt={photo.alt}
                 fill
                 sizes={

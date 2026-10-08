@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { LeadForm } from "@/components/form/LeadForm";
-import { INSTITUTE, INTAKE } from "@/lib/site";
+import { INSTITUTE, INTAKE, asset } from "@/lib/site";
 
 export function FinalCtaSection() {
   return (
     <section className="relative isolate overflow-hidden bg-brand text-white">
       <Image
-        src="/campus/campus.webp"
+        src={asset("/campus/campus.webp")}
         alt=""
         fill
         sizes="100vw"

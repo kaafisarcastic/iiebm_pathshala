@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { LeadForm } from "@/components/form/LeadForm";
 import { pgdmPlusCtc } from "@/data/placements";
-import { ANCHORS, INSTITUTE, INTAKE } from "@/lib/site";
+import { ANCHORS, INSTITUTE, INTAKE, asset } from "@/lib/site";
 
 const proofPoints = [
   "Admissions open for PGDM, PGDM PLUS (SAP) and MBA",
@@ -14,7 +14,7 @@ export function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-brand text-white">
       <Image
-        src="/campus/aerial-campus.webp"
+        src={asset("/campus/aerial-campus.webp")}
         alt="Aerial view of the IIEBM Indus Business School campus in Wakad, Pune"
         fill
         priority

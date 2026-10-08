@@ -1,16 +1,24 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaButton } from "@/components/ui/CtaButton";
-import { ACCEPTED_EXAMS, ANCHORS, OTHER_EXAMS, TOOLS } from "@/lib/site";
+import {
+  ACCEPTED_EXAMS,
+  ANCHORS,
+  OTHER_EXAMS,
+  TOOLS,
+  toolUrl,
+} from "@/lib/site";
 
 const tools = [
   {
     ...TOOLS.catPredictor,
+    href: toolUrl(TOOLS.catPredictor.path),
     blurb:
       "See which business schools your CAT percentile puts in range before you shortlist.",
   },
   {
     ...TOOLS.catScoreCalculator,
+    href: toolUrl(TOOLS.catScoreCalculator.path),
     blurb:
       "Turn your raw CAT attempt into a scaled score and an expected percentile.",
   },
@@ -55,13 +63,16 @@ export function EntranceExamsSection() {
             <p className="type-body mt-2 text-muted">{tool.blurb}</p>
 
             {tool.href ? (
-              <CtaButton
+              /*
+               * A separate subdomain, so this is an external link — not a
+               * <Link>, and never route()-prefixed.
+               */
+              <a
                 href={tool.href}
-                variant="outline"
-                className="mt-5 w-fit"
+                className="mt-5 inline-flex w-fit items-center justify-center rounded-brand border border-brand/30 bg-white px-6 py-3 text-sm font-semibold text-brand transition-colors hover:border-brand hover:bg-brand-tint"
               >
                 Open {tool.label}
-              </CtaButton>
+              </a>
             ) : (
               <p className="type-small mt-5 inline-flex w-fit rounded-brand bg-canvas-alt px-3 py-2 font-medium text-muted">
                 Coming Soon

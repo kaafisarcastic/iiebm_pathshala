@@ -5,7 +5,7 @@ import { ConversionEvent } from "@/components/analytics/ConversionEvent";
 import { Footer } from "@/components/sections/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { admissionSteps } from "@/data/admissions";
-import { INSTITUTE, INTAKE } from "@/lib/site";
+import { INSTITUTE, INTAKE, asset } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Thank You — Your Enquiry Is In",
@@ -47,7 +47,7 @@ export default async function ThankYouPage({
         <section className="border-b border-line bg-brand text-white">
           <div className="mx-auto w-full max-w-3xl px-5 py-16 text-center sm:px-6 lg:py-24">
             <Image
-              src="/brand/iiebm-logo.png"
+              src={asset("/brand/iiebm-logo.png")}
               alt={`${INSTITUTE.name} logo`}
               width={220}
               height={76}

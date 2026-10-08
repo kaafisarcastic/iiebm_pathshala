@@ -3,10 +3,44 @@
  * than to the institute. Edit these values, not the components.
  */
 
-/** Public origin of the deployed landing page. Used for canonical + OG URLs. */
+/**
+ * The path this app is served under on the shared domain.
+ *
+ * KEEP IN SYNC: basePath in next.config.ts must match this exactly.
+ */
+export const BASE_PATH = "/iiebm";
+
+/**
+ * A file in /public, prefixed for the base path.
+ *
+ * next/image does NOT apply basePath to `src` — documented Next.js behaviour —
+ * so every image source has to come through here or it 404s under the hub.
+ */
+export function asset(path: string): string {
+  return `${BASE_PATH}${path}`;
+}
+
+/**
+ * An internal route, prefixed for the base path.
+ *
+ * Only for hand-written URLs: raw `fetch`, `window.location`, and plain
+ * `<a href="/…">`. Do NOT use it with <Link>, router.push/replace, or
+ * redirect() — Next.js already prefixes those, and wrapping yields /iiebm/iiebm/…
+ */
+export function route(path: string): string {
+  return `${BASE_PATH}${path}`;
+}
+
+/**
+ * Public origin of the shared domain, without the base path. The hub owns the
+ * root; this app only ever lives beneath BASE_PATH.
+ */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://admissions.pathshalahub.com"
 ).replace(/\/$/, "");
+
+/** Absolute public URL of this landing page — canonical, OG and JSON-LD. */
+export const PAGE_URL = `${SITE_URL}${BASE_PATH}`;
 
 /** The consultancy running the ads. Shown in the partner disclosure. */
 export const PARTNER_NAME = "Pathshala Hub";
@@ -44,13 +78,29 @@ export const ACCEPTED_EXAMS = [
 export const OTHER_EXAMS = ["NMAT", "SNAP"] as const;
 
 /**
- * Aspirant tools. Both are unbuilt — the links stay inert until a real URL is
- * set here, so nothing on the page points at a dead route.
+ * Origin the CAT tools will live on.
+ *
+ * They go on a SEPARATE SUBDOMAIN, so a relative "/cat-predictor" would
+ * resolve against admissions.pathshalahub.com and 404. The subdomain is not
+ * decided yet: while this is empty both links stay hidden rather than render
+ * buttons that go nowhere. Setting this one constant turns both on.
+ *
+ * Example once decided: "https://tools.pathshalahub.com"
  */
+export const CAT_TOOLS_ORIGIN = "";
+
 export const TOOLS = {
-  catPredictor: { label: "CAT Predictor", href: "" },
-  catScoreCalculator: { label: "CAT Score Calculator", href: "" },
+  catPredictor: { label: "CAT Predictor", path: "/cat-predictor" },
+  catScoreCalculator: {
+    label: "CAT Score Calculator",
+    path: "/cat-score-calculator",
+  },
 } as const;
+
+/** Absolute URL for a CAT tool, or "" while the subdomain is undecided. */
+export function toolUrl(path: string): string {
+  return CAT_TOOLS_ORIGIN ? `${CAT_TOOLS_ORIGIN}${path}` : "";
+}
 
 /** The institute. Every figure on the page is sourced from iiebm.com. */
 export const INSTITUTE = {

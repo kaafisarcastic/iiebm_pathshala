@@ -34,7 +34,7 @@ npm run dev
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Public origin. Drives canonical, OG and sitemap URLs. |
+| `NEXT_PUBLIC_SITE_URL` | Origin of the shared domain, **without** the base path. Defaults to `https://admissions.pathshalahub.com`. Drives canonical, OG and JSON-LD URLs. |
 | `GOOGLE_SHEET_WEBHOOK_URL` | Apps Script `/exec` URL that appends leads to the sheet. |
 | `GOOGLE_SHEET_SECRET` | Shared token; must match `SECRET` in the Apps Script. |
 | `GOOGLE_SHEET_TAB` | Tab for this landing page. Created with its header row on the first lead. Defaults to `Leads`. |
@@ -56,6 +56,50 @@ The number lives in `PARTNER_WHATSAPP` in `lib/site.ts`, not in the
 environment, for exactly the build-time reason above. Digits only with the
 country code and no `+`. Empty hides the button. The label reads "Talk to an
 admission counsellor" and expands whenever the reader stops scrolling.
+
+## Served under a base path
+
+This app is served at **https://admissions.pathshalahub.com/iiebm**. A hub
+project owns the domain and *rewrites* `/iiebm/:path*` through to this
+deployment — a rewrite, not a redirect, so the address bar never leaves the hub
+and this app must genuinely serve its pages under `/iiebm`.
+
+The slug lives in **two** places that must stay in sync:
+
+- `basePath` in `next.config.ts`
+- `BASE_PATH` in `lib/site.ts`
+
+`lib/site.ts` exports two helpers, and which one you need depends on whether
+Next.js already prefixes the URL:
+
+| Use `asset()` / `route()` | Do **not** wrap — Next prefixes these already |
+| --- | --- |
+| every `next/image` `src` | `<Link href>` |
+| raw `fetch("/api/lead")` | `router.push` / `router.replace` |
+| `window.location.assign/replace` | `redirect()` from `next/navigation` |
+| plain `<a href="/…">` to an internal page | metadata `icons`, file-convention `icon.png` |
+
+Wrapping something in the right-hand column produces `/iiebm/iiebm/…`.
+
+`next/image` not applying `basePath` to `src` is documented Next.js behaviour
+and the easiest thing to miss. A missed image 404s visibly; **a missed `fetch`
+fails silently** — the request leaves the app, the visitor sees "Network
+error", and the lead is gone with no sheet row and no email while the page
+looks perfect. Grep for `fetch("/`, `href="/` and `location.assign("/` before
+shipping.
+
+There is deliberately **no `robots.ts` and no `sitemap.ts`**. Crawlers only read
+`robots.txt` from the domain root, which the hub owns, and the hub's sitemap
+already lists this page. Adding them here would be unreachable at best and a
+conflicting signal at worst.
+
+### CAT tools
+
+`CAT_TOOLS_ORIGIN` in `lib/site.ts` is the single edit that turns the CAT
+Predictor and CAT Score Calculator links on. They will live on a separate
+subdomain, so a relative `/cat-predictor` would resolve against
+`admissions.pathshalahub.com` and 404. While the constant is empty both cards
+read "Coming Soon" instead of rendering buttons that go nowhere.
 
 ## Google Sheet setup
 

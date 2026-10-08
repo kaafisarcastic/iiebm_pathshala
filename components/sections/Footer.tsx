@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FOOTER_DISCLOSURE, INSTITUTE } from "@/lib/site";
+import { FOOTER_DISCLOSURE, INSTITUTE, asset } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-12 sm:px-6 lg:grid-cols-[1fr_auto] lg:px-8">
         <div>
           <Image
-            src="/brand/iiebm-logo.png"
+            src={asset("/brand/iiebm-logo.png")}
             alt={`${INSTITUTE.name} logo`}
             width={220}
             height={76}

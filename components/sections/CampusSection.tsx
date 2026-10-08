@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { INFRASTRUCTURE_INTRO, campusEvents, facilities } from "@/data/campus";
-import { ANCHORS } from "@/lib/site";
+import { ANCHORS, asset } from "@/lib/site";
 
 export function CampusSection() {
   return (
@@ -21,7 +21,7 @@ export function CampusSection() {
           >
             <div className="relative aspect-[16/10] w-full bg-canvas-alt">
               <Image
-                src={facility.image}
+                src={asset(facility.image)}
                 alt={`${facility.title} at the IIEBM campus, Pune`}
                 fill
                 sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 90vw"
@@ -49,7 +49,7 @@ export function CampusSection() {
           >
             <div className="relative aspect-[4/5] w-full bg-canvas-alt">
               <Image
-                src={event.image}
+                src={asset(event.image)}
                 alt={event.title}
                 fill
                 sizes="(min-width: 1024px) 16rem, (min-width: 640px) 45vw, 90vw"

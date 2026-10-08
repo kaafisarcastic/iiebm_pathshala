@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/site";
 
 type Logo = { name: string; file: string };
 
@@ -39,7 +40,7 @@ export function LogoMarquee({
                 className="flex h-24 w-44 shrink-0 items-center justify-center px-4 sm:w-52"
               >
                 <Image
-                  src={`/${dir}/${logo.file}.${ext}`}
+                  src={asset(`/${dir}/${logo.file}.${ext}`)}
                   alt={copy === 0 ? logo.name : ""}
                   width={208}
                   height={88}

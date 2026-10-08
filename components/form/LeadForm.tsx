@@ -11,7 +11,7 @@ import {
   type LeadFieldErrors,
   type LeadTextField,
 } from "@/lib/lead";
-import { CONSENT_TEXT, INSTITUTE } from "@/lib/site";
+import { CONSENT_TEXT, INSTITUTE, route } from "@/lib/site";
 
 /** Campaign parameters worth carrying into the sheet alongside the lead. */
 const TRACKING_KEYS = [
@@ -159,7 +159,7 @@ export function LeadForm({
     const tracking = captureTracking();
 
     try {
-      const response = await fetch("/api/lead", {
+      const response = await fetch(route("/api/lead"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

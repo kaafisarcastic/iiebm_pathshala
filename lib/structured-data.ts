@@ -1,6 +1,6 @@
 import { faqs } from "@/data/admissions";
 import { programsOffered, specialisations } from "@/data/programs";
-import { INSTITUTE, SITE_URL } from "@/lib/site";
+import { INSTITUTE, PAGE_URL, SITE_URL, asset } from "@/lib/site";
 
 /**
  * Schema.org graph for the landing page. Google reads the FAQPage node for
@@ -9,11 +9,11 @@ import { INSTITUTE, SITE_URL } from "@/lib/site";
 export function buildStructuredData() {
   const institute = {
     "@type": "CollegeOrUniversity",
-    "@id": `${SITE_URL}/#institute`,
+    "@id": `${PAGE_URL}#institute`,
     name: INSTITUTE.name,
     alternateName: INSTITUTE.shortName,
     url: INSTITUTE.website,
-    logo: `${SITE_URL}/brand/iiebm-logo.png`,
+    logo: `${SITE_URL}${asset("/brand/iiebm-logo.png")}`,
     foundingDate: INSTITUTE.foundedYear,
     parentOrganization: { "@type": "Organization", name: INSTITUTE.legalName },
     telephone: INSTITUTE.phone,
@@ -36,7 +36,7 @@ export function buildStructuredData() {
     "@type": "Course",
     name,
     description,
-    provider: { "@id": `${SITE_URL}/#institute` },
+    provider: { "@id": `${PAGE_URL}#institute` },
     educationalCredentialAwarded: credential,
     hasCourseInstance: {
       "@type": "CourseInstance",
@@ -71,7 +71,7 @@ export function buildStructuredData() {
 
   const faqPage = {
     "@type": "FAQPage",
-    "@id": `${SITE_URL}/#faq`,
+    "@id": `${PAGE_URL}#faq`,
     mainEntity: faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,

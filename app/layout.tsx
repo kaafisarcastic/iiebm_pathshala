@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { GoogleTag } from "@/components/analytics/GoogleTag";
-import { INSTITUTE, SITE_URL } from "@/lib/site";
+import { BASE_PATH, INSTITUTE, PAGE_URL, SITE_URL, asset } from "@/lib/site";
 
 // Poppins is the typeface iiebm.com uses site-wide.
 const poppins = Poppins({
@@ -46,17 +46,18 @@ export const metadata: Metadata = {
     "CAT Score Calculator",
     "MBA colleges accepting CAT score",
   ],
-  alternates: { canonical: "/" },
+  // Relative to metadataBase, so this resolves to SITE_URL + /iiebm.
+  alternates: { canonical: BASE_PATH },
   openGraph: {
     type: "website",
-    url: SITE_URL,
+    url: PAGE_URL,
     siteName: `${INSTITUTE.shortName} Admissions`,
     title,
     description,
     locale: "en_IN",
     images: [
       {
-        url: "/campus/aerial-campus.webp",
+        url: asset("/campus/aerial-campus.webp"),
         width: 1290,
         height: 700,
         alt: `${INSTITUTE.name} campus, Wakad, Pune`,
@@ -67,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/campus/aerial-campus.webp"],
+    images: [asset("/campus/aerial-campus.webp")],
   },
   robots: {
     index: true,

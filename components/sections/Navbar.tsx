@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ANCHORS, INSTITUTE, PARTNER_NAME } from "@/lib/site";
+import { ANCHORS, INSTITUTE, PARTNER_NAME, asset } from "@/lib/site";
 
 const navLinks = [
   { href: `#${ANCHORS.placements}`, label: "Placements" },
@@ -15,7 +15,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-5 sm:px-6 lg:h-20 lg:px-8">
         <div className="flex items-center gap-3">
           <Image
-            src="/brand/iiebm-logo.png"
+            src={asset("/brand/iiebm-logo.png")}
             alt={`${INSTITUTE.name} logo`}
             width={220}
             height={76}
