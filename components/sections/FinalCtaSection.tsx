@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { LeadForm } from "@/components/form/LeadForm";
-import { INSTITUTE, INTAKE, asset } from "@/lib/site";
+import { INSTITUTE, INTAKE, PARTNER_PHONE, asset } from "@/lib/site";
 
 export function FinalCtaSection() {
   return (
@@ -36,10 +36,10 @@ export function FinalCtaSection() {
 
           <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
             <a
-              href={`tel:${INSTITUTE.phoneHref}`}
+              href={`tel:${PARTNER_PHONE.tel}`}
               className="font-semibold underline-offset-4 hover:underline"
             >
-              {INSTITUTE.phone}
+              {PARTNER_PHONE.display}
             </a>
             <a
               href={`mailto:${INSTITUTE.email}`}

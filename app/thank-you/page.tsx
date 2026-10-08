@@ -5,7 +5,7 @@ import { ConversionEvent } from "@/components/analytics/ConversionEvent";
 import { Footer } from "@/components/sections/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { admissionSteps } from "@/data/admissions";
-import { INSTITUTE, INTAKE, asset } from "@/lib/site";
+import { INSTITUTE, INTAKE, PARTNER_PHONE, asset } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Thank You — Your Enquiry Is In",
@@ -81,10 +81,10 @@ export default async function ThankYouPage({
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
-                href={`tel:${INSTITUTE.phoneHref}`}
+                href={`tel:${PARTNER_PHONE.tel}`}
                 className="inline-flex items-center gap-2 rounded-brand bg-white px-6 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand-tint"
               >
-                Call {INSTITUTE.phone}
+                Call {PARTNER_PHONE.display}
               </a>
               <Link
                 href="/"

@@ -1,4 +1,4 @@
-import { ANCHORS, INSTITUTE } from "@/lib/site";
+import { ANCHORS, PARTNER_PHONE } from "@/lib/site";
 
 /**
  * On phones the hero form scrolls away quickly, so a call / apply pair stays
@@ -10,7 +10,7 @@ export function MobileCtaBar() {
     <div className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-white/95 p-3 backdrop-blur lg:hidden">
       <div className="flex gap-3">
         <a
-          href={`tel:${INSTITUTE.phoneHref}`}
+          href={`tel:${PARTNER_PHONE.tel}`}
           className="inline-flex flex-1 items-center justify-center gap-2 rounded-brand border border-brand/30 px-4 py-3 text-sm font-semibold text-brand"
         >
           <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">

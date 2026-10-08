@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ANCHORS, INSTITUTE, PARTNER_NAME, asset } from "@/lib/site";
+import { ANCHORS, INSTITUTE, PARTNER_NAME, PARTNER_PHONE, asset } from "@/lib/site";
 
 const navLinks = [
   { href: `#${ANCHORS.placements}`, label: "Placements" },
@@ -43,7 +43,7 @@ export function Navbar() {
 
         <div className="ml-auto flex items-center gap-2 lg:ml-6 lg:gap-3">
           <a
-            href={`tel:${INSTITUTE.phoneHref}`}
+            href={`tel:${PARTNER_PHONE.tel}`}
             className="hidden items-center gap-2 text-sm font-semibold text-brand sm:inline-flex"
           >
             <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden="true">
@@ -52,7 +52,7 @@ export function Navbar() {
                 fill="currentColor"
               />
             </svg>
-            {INSTITUTE.phone}
+            {PARTNER_PHONE.display}
           </a>
           <a
             href={`#${ANCHORS.form}`}

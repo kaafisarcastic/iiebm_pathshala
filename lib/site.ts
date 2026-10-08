@@ -133,23 +133,39 @@ export const INTAKE = {
 } as const;
 
 /**
- * PathshalaHub's WhatsApp line for the floating chat button.
+ * Pathshala Hub's admissions line — the number that actually gets answered.
  *
- * Digits only, country code first, no "+" or spaces — "919876543210" — which
- * is the format wa.me expects. Fill `number` in and the button appears; leave
- * it empty and it stays hidden.
+ * Every "call us" link and the WhatsApp button come from here, so the two can
+ * never drift apart. Edit the digits once, in `display`; `tel` and `whatsapp`
+ * are derived from it.
+ *
+ * Note this is NOT INSTITUTE.phone. That one is IIEBM's own published line and
+ * stays in the structured data, where it is a statement about the college.
+ * Calls from this page route to the partner running the campaign.
  *
  * Deliberately a literal rather than an env var: NEXT_PUBLIC_* values are
  * inlined into the client bundle at build time, so a number supplied only at
  * runtime renders on the server and then disappears on hydration.
  */
+const PARTNER_PHONE_DISPLAY = "+91 97926 62662";
+
+/** "+91 97926 62662" -> "+919792662662" (tel:) and "919792662662" (wa.me). */
+const PARTNER_PHONE_DIGITS = PARTNER_PHONE_DISPLAY.replace(/\D/g, "");
+
+export const PARTNER_PHONE = {
+  display: PARTNER_PHONE_DISPLAY,
+  /** tel: href, E.164. */
+  tel: `+${PARTNER_PHONE_DIGITS}`,
+};
+
 export const PARTNER_WHATSAPP: {
   number: string;
   display: string;
   greeting: string;
 } = {
-  number: "919792662662",
-  display: "+91 97926 62662",
+  /** wa.me wants digits only, no "+". */
+  number: PARTNER_PHONE_DIGITS,
+  display: PARTNER_PHONE_DISPLAY,
   greeting:
     "Hi! I'd like to know more about admissions at IIEBM, Pune for the 2026-28 batch.",
 };

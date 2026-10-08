@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FOOTER_DISCLOSURE, INSTITUTE, asset } from "@/lib/site";
+import { FOOTER_DISCLOSURE, INSTITUTE, PARTNER_PHONE, asset } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -23,10 +23,10 @@ export function Footer() {
             <dt className="sr-only">Phone</dt>
             <dd>
               <a
-                href={`tel:${INSTITUTE.phoneHref}`}
+                href={`tel:${PARTNER_PHONE.tel}`}
                 className="font-semibold text-brand"
               >
-                {INSTITUTE.phone}
+                {PARTNER_PHONE.display}
               </a>
             </dd>
           </div>

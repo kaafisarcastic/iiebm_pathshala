@@ -11,7 +11,7 @@ import {
   type LeadFieldErrors,
   type LeadTextField,
 } from "@/lib/lead";
-import { CONSENT_TEXT, INSTITUTE, route } from "@/lib/site";
+import { CONSENT_TEXT, PARTNER_PHONE, route } from "@/lib/site";
 
 /** Campaign parameters worth carrying into the sheet alongside the lead. */
 const TRACKING_KEYS = [
@@ -197,7 +197,7 @@ export function LeadForm({
       router.push(`/thank-you?program=${encodeURIComponent(values.program)}`);
     } catch {
       setFormError(
-        `Something went wrong. Please call ${INSTITUTE.phone} and we will take it from there.`,
+        `Something went wrong. Please call ${PARTNER_PHONE.display} and we will take it from there.`,
       );
       setStatus("idle");
     }
@@ -338,10 +338,10 @@ export function LeadForm({
       <p className="type-small text-center text-muted">
         Or call{" "}
         <a
-          href={`tel:${INSTITUTE.phoneHref}`}
+          href={`tel:${PARTNER_PHONE.tel}`}
           className="font-semibold text-brand"
         >
-          {INSTITUTE.phone}
+          {PARTNER_PHONE.display}
         </a>
       </p>
     </form>

@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 import type { LeadRecord } from "@/lib/lead";
-import { INSTITUTE, INTAKE, PARTNER_NAME } from "@/lib/site";
+import { INSTITUTE, INTAKE, PARTNER_NAME, PARTNER_PHONE } from "@/lib/site";
 
 function escapeHtml(value: string): string {
   return value
@@ -144,7 +144,7 @@ function studentHtml(lead: LeadRecord): string {
   </p>
 
   <p style="margin:28px 0 0;font-size:14px;">
-    Can't wait? Call <a href="tel:${INSTITUTE.phoneHref}" style="color:#003fa3;font-weight:600;text-decoration:none;">${escapeHtml(INSTITUTE.phone)}</a>.
+    Can't wait? Call <a href="tel:${PARTNER_PHONE.tel}" style="color:#003fa3;font-weight:600;text-decoration:none;">${escapeHtml(PARTNER_PHONE.display)}</a>.
   </p>
 
   <hr style="margin:28px 0 0;border:0;border-top:1px solid #e5eaf2;">
@@ -181,7 +181,7 @@ function studentText(lead: LeadRecord): string {
     `Programme: ${lead.program}`,
     ``,
     `Something wrong? Reply to this email and we will correct it.`,
-    `Can't wait? Call ${INSTITUTE.phone}.`,
+    `Can't wait? Call ${PARTNER_PHONE.display}.`,
     ``,
     `--`,
     `You accepted: ${lead.consentText}`,
