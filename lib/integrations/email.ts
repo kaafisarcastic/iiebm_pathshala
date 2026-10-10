@@ -1,7 +1,20 @@
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 import type { LeadRecord } from "@/lib/lead";
-import { INSTITUTE, INTAKE, PARTNER_NAME, PARTNER_PHONE } from "@/lib/site";
+import {
+  INSTITUTE,
+  INTAKE,
+  PARTNER_NAME,
+  PARTNER_PHONE,
+  SITE_URL,
+  asset,
+} from "@/lib/site";
+
+/**
+ * Mail clients need an absolute URL. The 440×152 file is shown at 220px wide
+ * so it stays sharp on retina screens.
+ */
+const LOGO_URL = `${SITE_URL}${asset("/brand/iiebm-logo.png")}`;
 
 function escapeHtml(value: string): string {
   return value
@@ -116,6 +129,9 @@ function studentHtml(lead: LeadRecord): string {
   const firstName = lead.name.trim().split(/\s+/)[0];
 
   return `<div style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;max-width:600px;color:#101828;">
+  <div style="padding:0 0 20px;">
+    <img src="${LOGO_URL}" width="220" height="76" alt="${escapeHtml(`${INSTITUTE.shortName} — ${INSTITUTE.name}`)}" style="display:block;border:0;outline:none;text-decoration:none;width:220px;max-width:100%;height:auto;">
+  </div>
   <div style="background:#003fa3;border-radius:12px;padding:28px 24px;color:#ffffff;">
     <p style="margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);font-weight:700;">Batch ${escapeHtml(INTAKE.batch)}</p>
     <h1 style="margin:0;font-size:24px;line-height:1.25;">Thank You, ${escapeHtml(firstName)}</h1>
