@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 const title =
-  "PGDM & MBA Admissions 2026-28 | IIEBM Indus Business School, Pune";
+  "PGDM & MBA Admissions 2027-28 | IIEBM Indus Business School, Pune";
 const description =
   "Apply to the AICTE approved 2-year PGDM, PGDM PLUS with SAP certification, or the MBA at IIEBM Indus Business School, Pune. Highest CTC 34 LPA, 125 recruiters. Request a callback.";
 
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     "MBA Pune",
     "IIEBM",
     "Indus Business School",
-    "PGDM admission 2026",
-    "MBA admission 2026",
+    "PGDM admission 2027",
+    "MBA admission 2027",
     "PGDM with SAP",
     "best B school in Pune",
     "MBA colleges in Pune",

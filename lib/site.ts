@@ -124,12 +124,12 @@ export const INSTITUTE = {
 
 /** Intake the ads are pointed at, as published on iiebm.com. */
 export const INTAKE = {
-  batch: "2026-28",
+  batch: "2027-28",
   applicationsOpen: "14th September 2026",
   applicationFee: "Rs. 1200",
   commencement: "June 2027",
   deadlineNote:
-    "Applications for the academic year 2026-28 will close on 15 May 2026.",
+    "Applications for the academic year 2027-28 will close on 15 May 2027.",
 } as const;
 
 /**
@@ -167,7 +167,7 @@ export const PARTNER_WHATSAPP: {
   number: PARTNER_PHONE_DIGITS,
   display: PARTNER_PHONE_DISPLAY,
   greeting:
-    "Hi! I'd like to know more about admissions at IIEBM, Pune for the 2026-28 batch.",
+    "Hi! I'd like to know more about admissions at IIEBM, Pune for the 2027-28 batch.",
 };
 
 /** wa.me deep link with the greeting pre-filled. Empty when no number is set. */

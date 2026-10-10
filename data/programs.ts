@@ -19,7 +19,7 @@ export type ProgramOffering = {
  *
  * PGDM and PGDM PLUS are described on iiebm.com. The MBA entry is NOT on
  * iiebm.com — it comes from admissions copy supplied by the institute for the
- * 2026-28 intake, and their public Admission FAQ has not caught up yet.
+ * 2027-28 intake, and their public Admission FAQ has not caught up yet.
  * Keep it in step with whatever IIEBM publishes.
  */
 export const programsOffered: ProgramOffering[] = [
@@ -49,7 +49,7 @@ export const programsOffered: ProgramOffering[] = [
   },
   {
     name: "MBA",
-    meta: "Batch 2026-28 · Applications open",
+    meta: "Batch 2027-28 · Applications open",
     summary:
       "For aspiring management professionals, with an industry-oriented curriculum and the same placement and grooming machinery behind it.",
     highlights: [

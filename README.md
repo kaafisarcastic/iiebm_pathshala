@@ -10,7 +10,7 @@ Every figure, quote, ranking, logo and photograph on the page is taken from
 ## Two things to verify before the ads run
 
 1. **The MBA.** `programsOffered` in `data/programs.ts` lists an MBA for the
-   2026-28 intake, from admissions copy the institute supplied. It is **not**
+   2027-28 intake, from admissions copy the institute supplied. It is **not**
    on iiebm.com, and their public Admission FAQ (Q.1) still reads *"there is no
    MBA program"*. Get that FAQ updated — Google checks a landing page against
    the advertiser's own site.

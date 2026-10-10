@@ -15,7 +15,7 @@ export function ProgramsSection() {
       <SectionHeading
         eyebrow="Programs"
         title="Three Ways Into A Management Career At IIEBM"
-        description="Admissions are open across all three for the 2026-28 intake."
+        description="Admissions are open across all three for the 2027-28 intake."
       />
 
       <ul className="mt-12 grid gap-5 lg:grid-cols-3">
