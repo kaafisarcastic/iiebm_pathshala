@@ -6,6 +6,7 @@ import {
   INTAKE,
   PARTNER_NAME,
   PARTNER_PHONE,
+  PARTNER_WHATSAPP,
   SITE_URL,
   asset,
 } from "@/lib/site";
@@ -124,6 +125,44 @@ function teamText(lead: LeadRecord): string {
     .join("\n");
 }
 
+/**
+ * Where "Get My Coupon" goes: WhatsApp, pre-filled with the programme AND the
+ * college. Several colleges share the coupon desk and several offer "PGDM", so
+ * the college name is what tells the counsellor whose enquiry it is.
+ *
+ * The one place to repoint the coupon at a landing page or form. Built from
+ * the bare number because WHATSAPP_LINK already carries its own ?text=.
+ */
+function couponLink(lead: LeadRecord): string {
+  const message = encodeURIComponent(
+    `Hi, I enquired about ${lead.program} at ${INSTITUTE.shortName}. ` +
+      `I would like my application form fee discount coupon.`,
+  );
+  return `https://wa.me/${PARTNER_WHATSAPP.number}?text=${message}`;
+}
+
+/**
+ * The application-form-fee voucher. A bordered table with square corners and
+ * inline styles only, because that is the layout Outlook renders correctly.
+ * The headline stays generic — the programme belongs in the WhatsApp message,
+ * and "Not decided yet Application Form Fee" reads badly. No amount or expiry:
+ * we have not been given real terms.
+ */
+function voucherHtml(lead: LeadRecord): string {
+  if (!PARTNER_WHATSAPP.number) return "";
+
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:separate;margin:24px 0 0;">
+    <tr>
+      <td style="border:2px dashed #b8860f;background:#fdf6e3;padding:20px 24px;text-align:center;">
+        <p style="margin:0 0 6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#5a6472;font-weight:600;">Your Application Form Offer</p>
+        <p style="margin:0 0 4px;font-size:19px;line-height:1.3;color:#003fa3;font-weight:700;">Discount Coupon on Your<br>Application Form Fee</p>
+        <p style="margin:0 0 16px;font-size:12px;color:#5a6472;line-height:1.5;">Message us to claim it before you apply.</p>
+        <a href="${escapeHtml(couponLink(lead))}" style="display:inline-block;background:#003fa3;color:#ffffff;padding:12px 28px;text-decoration:none;font-size:14px;font-weight:700;">Get My Coupon</a>
+      </td>
+    </tr>
+  </table>`;
+}
+
 /** The student's acknowledgement. */
 function studentHtml(lead: LeadRecord): string {
   const firstName = lead.name.trim().split(/\s+/)[0];
@@ -139,6 +178,8 @@ function studentHtml(lead: LeadRecord): string {
       We have your enquiry about <strong>${escapeHtml(lead.program)}</strong> at ${escapeHtml(INSTITUTE.name)}, Pune. An admissions counsellor will call you shortly.
     </p>
   </div>
+
+  ${voucherHtml(lead)}
 
   <h2 style="margin:28px 0 12px;font-size:16px;">What Happens Next</h2>
   <ol style="margin:0;padding-left:20px;font-size:14px;line-height:1.75;color:#5a6472;">
@@ -183,6 +224,13 @@ function studentText(lead: LeadRecord): string {
     `We have your enquiry about ${lead.program} at ${INSTITUTE.name}, Pune.`,
     `An admissions counsellor will call you shortly.`,
     ``,
+    ...(PARTNER_WHATSAPP.number
+      ? [
+          `Discount coupon on your application form fee`,
+          `Message us to claim it before you apply: ${couponLink(lead)}`,
+          ``,
+        ]
+      : []),
     `What happens next`,
     `1. A counsellor calls you, usually the same day, from a Pune number.`,
     `2. We check your eligibility against your graduation percentage and entrance`,
@@ -226,7 +274,8 @@ export async function emailTeam(lead: LeadRecord): Promise<void> {
     from: sender(),
     to,
     replyTo: lead.email,
-    subject: `New ${lead.program} Enquiry — ${lead.name}, ${lead.city}`,
+    // College name first, so a shared inbox sorts by college.
+    subject: `${INSTITUTE.shortName} — New Enquiry: ${lead.name} (${lead.program})`,
     html: teamHtml(lead),
     text: teamText(lead),
   });
@@ -238,7 +287,7 @@ export async function emailStudent(lead: LeadRecord): Promise<void> {
     from: sender(),
     to: lead.email,
     replyTo: process.env.LEAD_EMAIL_TO?.split(",")[0]?.trim() || undefined,
-    subject: `We Have Your Enquiry — ${INSTITUTE.shortName} Admissions ${INTAKE.batch}`,
+    subject: `We Have Received Your ${INSTITUTE.shortName} Admission Enquiry`,
     html: studentHtml(lead),
     text: studentText(lead),
   });

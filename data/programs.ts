@@ -229,5 +229,4 @@ export const certifications = [
 export const programOptions = [
   ...programsOffered.map((program) => program.formValue),
   ...specialisations.map((s) => s.formValue),
-  "Not sure yet",
 ];
